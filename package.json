@@ -5,10 +5,8 @@
   "author": "Kalle Chen <kallechen.tw@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "node index.js"
-  },
-  "dependencies": {
-    "merkle-tools": "^1.4.1"
+    "create-tree": "node createTree.js",
+    "validate": "node validate.js"
   },
   "devDependencies": {
     "@babel/core": "^7.17.5",
