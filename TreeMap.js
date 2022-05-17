@@ -5,6 +5,9 @@ class TreeMap extends Model {}
 
 TreeMap.init(
   {
+    txid: {
+      type: DataTypes.STRING,
+    },
     index: {
       type: DataTypes.STRING,
     },
