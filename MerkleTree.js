@@ -5,9 +5,12 @@ class MerkleTree extends Model {}
 
 MerkleTree.init(
   {
-    data: {
+    tree: {
       type: DataTypes.STRING,
     },
+    root_hash: {
+      type: DataTypes.STRING
+    }
   },
   {
     sequelize,

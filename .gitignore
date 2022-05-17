@@ -2,3 +2,4 @@
 node_modules
 merkle_tree
 *.sqlite
+roots

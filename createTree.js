@@ -3,6 +3,7 @@ const merkle = require('./merkle')
 const fs = require('fs')
 const sequelize = require('./database')
 const MerkleTree = require('./MerkleTree')
+const TreeMap = require('./TreeMap')
 
 const sha256 = (data) => {
   return crypto.createHash('sha256').update(data).digest()
@@ -18,12 +19,23 @@ const createTree = async () => {
   await sequelize.sync()
   try {
     const trees = data.map((d) => merkle(d, sha256))
-    trees.forEach((tree) => {
+    const roots = trees.map((tree) => tree[tree.length - 1].toString('hex'))
+    trees.forEach((tree, index) => {
       MerkleTree.create({
-        data: JSON.stringify(tree),
+        tree: JSON.stringify(tree),
+        root_hash: roots[index],
       })
     })
-    const roots = trees.map((tree) => tree[tree.length - 1])
+    data.forEach((d, index) => {
+      const root = roots[index]
+      d.forEach((x) => {
+        TreeMap.create({
+          txid: x,
+          index: root,
+        })
+      })
+    })
+    fs.writeFileSync('./roots', JSON.stringify(roots))
   } catch (e) {
     console.error(e)
   }
