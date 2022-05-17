@@ -30,7 +30,7 @@ const createTree = async () => {
       const root = roots[index]
       d.forEach((x) => {
         TreeMap.create({
-          txid: x,
+          txid: x.toString('hex'),
           index: root,
         })
       })

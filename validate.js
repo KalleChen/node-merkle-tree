@@ -13,6 +13,7 @@ const validate = async (txid) => {
     const rootHash = await TreeMap.findOne({ where: { txid: txid } })
     if (!rootHash) {
       console.log('Not found this txis')
+      console.log('result: ', false)
       return
     }
     const tree = await MerkleTree.findOne({
@@ -20,18 +21,22 @@ const validate = async (txid) => {
     })
     if (!tree) {
       console.log('Not found tree')
+      console.log('result: ', false)
       return
     }
-    const merkleTree = JSON.parse(tree.tree)
+    let merkleTree = JSON.parse(tree.tree)
+    merkleTree = merkleTree.map((t) => Buffer.from(t))
     const targetTxid = Buffer.from(txid, 'hex')
     const proof = merkleProof(merkleTree, targetTxid)
     if (proof === null) {
       console.log('No proof exists!')
+      console.log('result: ', false)
     } else {
-      return merkleProof.verify(proof, sha256)
+      console.log('result: ', merkleProof.verify(proof, sha256))
     }
   } catch (e) {
     console.log(e)
+    console.log('result: ', false)
   }
 }
-console.log(validate('fdfadfe'))
+validate('cafebeef1')
