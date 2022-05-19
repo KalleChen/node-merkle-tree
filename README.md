@@ -8,6 +8,14 @@ This is a sample project to build merkle tree and validate hash with nodejs
 docker compose up -d
 ```
 
+> Without docker
+> ```console
+> yarn install
+> yarn dev
+> or 
+> yarn start
+> ```
+
 The backend server will host on port 3000
 
 ## API
