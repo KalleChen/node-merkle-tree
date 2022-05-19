@@ -1,44 +1,34 @@
 const crypto = require('crypto')
-const merkle = require('./merkle')
-const fs = require('fs')
-const sequelize = require('./database')
-const MerkleTree = require('./MerkleTree')
-const TreeMap = require('./TreeMap')
+const merkle = require('./utils/merkle')
+const sequelize = require('./database/database')
+const MerkleTree = require('./database/MerkleTree')
+const TreeMap = require('./database/TreeMap')
 
 const sha256 = (data) => {
   return crypto.createHash('sha256').update(data).digest()
 }
 
-const data = [
-  ['cafebeef', 'ffffffff', 'aaaaaaaa', 'bbbbbbbb', 'cccccccc'],
-  ['fkdalsfdj', 'fdafd', 'afdfa', 'fdfadfasdfa', 'fdasfefdasf'],
-  ['fdfasdfasd', 'fdfadafd', 'fdafdafd', 'fdfasdfadsf', 'fdfadfe'],
-].map((d) => d.map((x) => Buffer.from(x, 'hex')))
-
-const createTree = async () => {
+const createTree = async (data) => {
+  if (!Array.isArray(data)) throw new Error('data must be an array')
+  const dataBuffer = data.map((x) => Buffer.from(x))
   await sequelize.sync()
   try {
-    const trees = data.map((d) => merkle(d, sha256))
-    const roots = trees.map((tree) => tree[tree.length - 1].toString('hex'))
-    trees.forEach((tree, index) => {
-      MerkleTree.create({
-        tree: JSON.stringify(tree),
-        root_hash: roots[index],
+    const tree = merkle(dataBuffer, sha256)
+    const root = tree[tree.length - 1].toString('hex')
+    MerkleTree.create({
+      tree: JSON.stringify(tree),
+      root_hash: root,
+    })
+    data.forEach((x) => {
+      TreeMap.create({
+        txid: x,
+        index: root,
       })
     })
-    data.forEach((d, index) => {
-      const root = roots[index]
-      d.forEach((x) => {
-        TreeMap.create({
-          txid: x.toString('hex'),
-          index: root,
-        })
-      })
-    })
-    fs.writeFileSync('./roots', JSON.stringify(roots))
   } catch (e) {
     console.error(e)
+    return null
   }
 }
 
-createTree()
+module.exports = createTree

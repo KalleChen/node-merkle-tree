@@ -8,4 +8,4 @@ services:
       - "3000:3000"
     volumes:
       - .:/src
-    command: yarn start
+    command: yarn dev
