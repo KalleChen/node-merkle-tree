@@ -2,7 +2,6 @@ const crypto = require('crypto')
 const merkle = require('./utils/merkle')
 const sequelize = require('./database/database')
 const MerkleTree = require('./database/MerkleTree')
-const TreeMap = require('./database/TreeMap')
 
 const sha256 = (data) => {
   return crypto.createHash('sha256').update(data).digest()
@@ -15,19 +14,20 @@ const createTree = async (data) => {
   try {
     const tree = merkle(dataBuffer, sha256)
     const root = tree[tree.length - 1].toString('hex')
+    const findTree = await MerkleTree.findOne({
+      where: { root_hash: root },
+    })
+    if (findTree) {
+      throw new Error('tree already exists')
+    }
     MerkleTree.create({
       tree: JSON.stringify(tree),
       root_hash: root,
     })
-    data.forEach((x) => {
-      TreeMap.create({
-        txid: x,
-        index: root,
-      })
-    })
+    return root
   } catch (e) {
     console.error(e)
-    return null
+    throw new Error(e)
   }
 }
 

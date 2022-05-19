@@ -19,6 +19,11 @@ The backend server will host on port 3000
 /upload
 ```
 
+- Method
+```
+POST
+```
+
 - Body example
 ```json
 {
@@ -26,4 +31,36 @@ The backend server will host on port 3000
 }
 ```
 
+- Response
+```json
+{
+  "merkle_tree_id": xxx
+}
+```
+
 ### Validation
+
+- Endpoint
+```
+/validate
+```
+
+- Method
+```
+GET
+```
+
+- Body example
+```json
+{
+  "hash": xxx,
+  "merkle_tree_id": xxx
+}
+```
+
+- Response
+```json
+{
+  "validation_result": true/false
+}
+```
