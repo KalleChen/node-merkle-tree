@@ -5,6 +5,7 @@
   "author": "Kalle Chen <kallechen.tw@gmail.com>",
   "license": "MIT",
   "scripts": {
+    "start": "node src/index.js",
     "create-tree": "node createTree.js",
     "validate": "node validate.js"
   },

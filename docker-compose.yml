@@ -1,0 +1,11 @@
+version: "2.1"
+
+services:
+  backend:
+    build: .
+    container_name: backend
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/src
+    command: yarn start
