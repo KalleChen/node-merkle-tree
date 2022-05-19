@@ -9,8 +9,8 @@ MerkleTree.init(
       type: DataTypes.STRING,
     },
     root_hash: {
-      type: DataTypes.STRING
-    }
+      type: DataTypes.STRING,
+    },
   },
   {
     sequelize,

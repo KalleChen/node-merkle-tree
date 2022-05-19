@@ -1,6 +1,5 @@
 const crypto = require('crypto')
 const merkleProof = require('./proof')
-const fs = require('fs')
 const TreeMap = require('./TreeMap')
 const MerkleTree = require('./MerkleTree')
 
