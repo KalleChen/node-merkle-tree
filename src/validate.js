@@ -6,10 +6,10 @@ const sha256 = (data) => {
   return crypto.createHash('sha256').update(data).digest()
 }
 
-const validate = async (txid, root) => {
+const validate = async (txid, treeId) => {
   try {
     const tree = await MerkleTree.findOne({
-      where: { root_hash: root },
+      where: { tree_id: treeId },
     })
     if (!tree) {
       return false

@@ -14,17 +14,17 @@ const createTree = async (data) => {
   try {
     const tree = merkle(dataBuffer, sha256)
     const root = tree[tree.length - 1].toString('hex')
-    const findTree = await MerkleTree.findOne({
-      where: { root_hash: root },
-    })
-    if (findTree) {
-      throw new Error('tree already exists')
-    }
+    const trees = await MerkleTree.findAll()
+    console.log(trees.length)
+    const treeId = sha256(root + trees.length).toString('hex')
     MerkleTree.create({
       tree: JSON.stringify(tree),
-      root_hash: root,
+      tree_id: treeId,
     })
-    return root
+    return {
+      merkle_tree_id: treeId,
+      root: root,
+    }
   } catch (e) {
     console.error(e)
     throw new Error(e)

@@ -8,8 +8,8 @@ app.use(express.json())
 
 app.post('/upload', async (req, res, next) => {
   try {
-    const root = await createTree(req?.body?.hashes)
-    res.json({ merkle_tree_id: root })
+    const result = await createTree(req?.body?.hashes)
+    res.json(result)
   } catch (err) {
     console.error(err)
     next(err)

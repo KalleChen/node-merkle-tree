@@ -8,7 +8,7 @@ MerkleTree.init(
     tree: {
       type: DataTypes.STRING,
     },
-    root_hash: {
+    tree_id: {
       type: DataTypes.STRING,
     },
   },
