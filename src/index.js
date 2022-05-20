@@ -18,7 +18,7 @@ app.post('/upload', async (req, res, next) => {
 
 app.get('/validate', async (req, res, next) => {
   try {
-    const { merkle_tree_id, hash } = req.body
+    const { merkle_tree_id, hash } = req.query
     const result = await validate(hash, merkle_tree_id)
     res.json({ validation_result: result })
   } catch (err) {

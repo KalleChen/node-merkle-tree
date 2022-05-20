@@ -42,7 +42,8 @@ POST
 - Response
 ```json
 {
-  "merkle_tree_id": xxx
+  "merkle_tree_id": xxx,
+  "root": xxx
 }
 ```
 
@@ -58,12 +59,10 @@ POST
 GET
 ```
 
-- Body example
-```json
-{
-  "hash": xxx,
-  "merkle_tree_id": xxx
-}
+- Params
+```
+hash: the txid
+merkle_tree_id: tree's id
 ```
 
 - Response
