@@ -35,15 +35,15 @@ POST
 - Body example
 ```json
 {
-  hashes: ["hash1", "hash2", "hash3"]
+  "hashes": ["hash1", "hash2", "hash3"]
 }
 ```
 
 - Response
 ```json
 {
-  "merkle_tree_id": xxx,
-  "root": xxx
+  "merkle_tree_id": "xxx",
+  "root": "xxx"
 }
 ```
 
@@ -68,6 +68,6 @@ merkle_tree_id: tree's id
 - Response
 ```json
 {
-  "validation_result": true/false
+  "validation_result": "true/false"
 }
 ```
